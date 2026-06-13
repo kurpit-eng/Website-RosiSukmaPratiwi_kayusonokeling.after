@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Manajemen Sertifikasi Sonokeling - ROSI SUKMA PRATIWI</title>
+    <style>
+        /* --- DESIGN SYSTEM PRINCIPLES (PROFESSIONAL THEME) --- */
+        :root {
+            --primary-color: #0f301d;     /* Deep Forest Charcoal */
+            --secondary-color: #4a2c11;   /* Sonokeling Heartwood Brown */
+            --accent-green: #2a7a43;      /* Sustainable Leaf Green */
+            --warning-orange: #d97706;    /* Audit Warning State */
+            --info-blue: #1d4ed8;         /* Compliance Information */
+            --bg-body: #f8fafc;           /* Clean Minimalist Background */
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;         /* High Contrast Typography */
+            --text-muted: #475569;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        /* --- STICKY NAVIGATION BAR --- */
+        .navbar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+        }
+
+        .navbar-user {
+            background: rgba(255, 255, 255, 0.07);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-align: right;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* --- HERO EXECUTIVE BANNER (PERBAIKAN DETEKSI SISTEM WINDOWS) --- */
+        .hero-section {
+            background: linear-gradient(rgba(15, 48, 29, 0.75), rgba(26, 18, 11, 0.75)), 
+                        url('background-hero.jpg') no-repeat center center/cover,
+                        url('background-hero.jpeg') no-repeat center center/cover;
+            color: white;
+            padding: 90px 20px;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-section p {
+            font-size: 1.15rem;
+            color: #d1d5db; /* Warna putih-abu lembut agar menyatu estetik dan tidak silau */
+            max-width: 850px;
+            margin: 0 auto 25px auto;
+            font-weight: 400;
+            line-height: 1.6;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        .badge-course {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* --- INTERACTIVE TAB SYSTEM --- */
+        .menu-container {
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 75px;
+            z-index: 999;
+        }
+
+        .menu-tabs {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            list-style: none;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 20px 20px;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border-bottom: 4px solid transparent;
+            white-space: nowrap;
+            flex: 1;
+            text-align: center;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary-color);
+            background-color: #f8fafc;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-green);
+            border-bottom-color: var(--accent-green);
+            background-color: #f0fdf4;
+        }
+
+        /* --- MAIN LAYOUT & CORE PANELS --- */
+        .container {
+            max-width: 1300px;
+            margin: 40px auto 60px auto;
+            padding: 0 25px;
+        }
+
+        .content-panel {
+            display: none;
+            animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- CORE CONTENT TYPOGRAPHY & CARDS --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 10px 15px -3px rgba(0,0,0,0.03);
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .panel-image-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .panel-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .panel-image-container:hover img {
+            transform: scale(1.02);
+        }
+
+        h2.section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            border-left: 6px solid var(--secondary-color);
+            padding-left: 18px;
+            font-weight: 800;
+        }
+
+        h3.subsection-title {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            margin: 30px 0 15px 0;
+            font-weight: 700;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            color: #334155;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #334155;
+        }
+
+        strong.highlight {
+            color: var(--secondary-color);
+        }
+
+        /* --- TECHNICAL DATA TABLES --- */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            padding: 14px 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: #334155;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* --- DASHBOARD STATS WIDGETS --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .stat-box {
+            background: #fafafa;
+            padding: 24px;
+            border-radius: 8px;
+            border-top: 4px solid var(--accent-green);
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+        }
+
+        .stat-box h4 { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;}
+        .stat-box .num { font-size: 2.2rem; font-weight: 800; color: var(--primary-color); }
+        .stat-box .desc { font-size: 0.75rem; color: var(--accent-green); margin-top: 5px; font-weight: 600;}
+
+        .badge { padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; }
+        .badge-active { background-color: #dcfce7; color: #166534; }
+        .badge-warning { background-color: #fef3c7; color: #92400e; }
+
+        /* --- COMPARISON MATRIX GRID --- */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .matrix-card {
+            background: #fdfdfd;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+        }
+
+        /* --- FOOTER EXCLUSIVITY --- */
+        footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 5px solid var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        footer p { text-align: center; margin-bottom: 6px; color: #94a3b8;}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">🪵 INTEGRATED SONOKELING CERTIFICATION SYSTEM</div>
+        <div class="navbar-user">
+            <strong>👨‍💻 ROSI SUKMA PRATIWI</strong><br>
+            <span>NIM: 2410611220091 | Kehutanan</span>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <h1>Sistem Manajemen Kelola & Sertifikasi Kayu Sonokeling</h1>
+        <p>Aplikasi Dokumentasi Komparatif Kriteria Kelestarian Hasil Hutan Komoditas High-Value Species (Dalbergia latifolia) Berdasarkan Regulasi Domestik dan Global</p>
+        <span class="badge-course">Matakuliah: Sertifikasi Hutan</span>
+    </header>
+
+    <div class="menu-container">
+        <div class="menu-tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'profil')">🌳 Eksistensi & Silvikutur</button>
+            <button class="tab-btn" onclick="openTab(event, 'dashboard')">📊 Dashboard Rencana Kerja</button>
+            <button class="tab-btn" onclick="openTab(event, 'phpl')">🇮🇩 Standar PHPL / SVLK</button>
+            <button class="tab-btn" onclick="openTab(event, 'fsc')">🇪🇺 Standar FSC</button>
+            <button class="tab-btn" onclick="openTab(event, 'pefc')">🌐 Standar PEFC / IFCC</button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div id="profil" class="content-panel active">
+            <div class="card">
+                <div class="panel-image-container">
+                    <img src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=1200" alt="Hutan Alam Sonokeling">
+                </div>
+                
+                <h2 class="section-title">Eksistensi Biologis, Karakteristik Fiskal, dan Status Kritis Sonokeling</h2>
+                <p><strong>Sonokeling</strong> (<em>Dalbergia latifolia</em>) merupakan pohon berkayu keras dari famili Fabaceae yang menduduki strata tertinggi dalam tata niaga kayu mewah domestik maupun ekspor. Tekstur seratnya yang eksotis dengan warna gubal jernih serta teras (*heartwood*) cokelat keunguan tua menjadikannya primadona yang tidak tergantikan di pasar internasional.</p>
+                
+                <h3 class="subsection-title">Aspek Dendrologi dan Pertumbuhan Kritis</h3>
+                <p>Pohon Sonokeling memiliki karakter pertumbuhan yang sangat lambat (*slow-growing species*). Untuk mencapai diameter batang layak tebang industri (diameter &gt; 40 cm), pohon ini membutuhkan waktu siklus rotasi minimum <strong>40 hingga 50 tahun</strong> di bawah pengawasan tapak silvikultur yang optimal. Pola regenerasi alaminya tergolong rendah, lebih banyak mengandalkan tunas akar (*root suckers*) daripada keberhasilan perkecambahan biji alami di lantai hutan.</p>
+
+                <h3 class="subsection-title">Pembatasan Internasional: Konsekuensi Hukum CITES Appendix II</h3>
+                <p>Sejak diadopsinya amandemen Sidang COP 17 CITES, *Dalbergia latifolia* resmi dimasukkan ke dalam daftar <strong>Appendix II CITES</strong>. Regulasi ini menyatakan:</p>
+                <ul>
+                    <li>Setiap rantai pasok niaga kayu Sonokeling antarnegara wajib dikontrol melalui instrumen kuota seketat mungkin guna mencegah kepunahan spesies di alam liar.</li>
+                    <li>Perdagangan lintas negara wajib menyertakan dokumen **SATS-LN** (Surat Angkut Tumbuhan dan Satwa Liar Luar Negeri) yang diterbitkan oleh otoritas ilmiah (LIPI/BRIN) dan otoritas manajemen (KLHK).</li>
+                    <li>Kelalaian pembuktian asal-usul legalitas berakibat pada penyitaan komoditas di pelabuhan internasional ekspor-impor.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="dashboard" class="content-panel">
+            <div class="card">
+                <div class="panel-image-container">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200" alt="Gudang Lacak Balak Log Kayu">
+                </div>
+
+                <h2 class="section-title">Sistem Lacak Balak Inventarisasi (Chain of Custody Dashboard)</h2>
+                <p>Di bawah ini merupakan visualisasi kontrol volume tebangan tahunan (*Annual Allowable Cut*) yang diintegrasikan untuk memenuhi kesesuaian sistem lacak balak ketiga standar sertifikasi hutan.</p>
+                
+                <div class="dashboard-grid">
+                    <div class="stat-box"><h4>Total Tegakan Terinventarisir</h4><div class="num">1,240</div><div class="desc">Pohon Induk Terpetakan</div></div>
+                    <div class="stat-box" style="border-top-color: var(--secondary-color);"><h4>Kuota Tebang Tahunan</h4><div class="num">150 m³</div><div class="desc">Batas Maksimum Kelestarian</div></div>
+                    <div class="stat-box" style="border-top-color: var(--warning-orange);"><h4>Realisasi Produksi</h4><div class="num">104.2 m³</div><div class="desc">Volume Lolos Verifikasi</div></div>
+                </div>
+
+                <h3 class="subsection-title">Data Lacak Balak Sensus Log Blok Tebangan Semester I</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nomor Kode Pohon/Log</th>
+                                <th>Titik Koordinat Geografis</th>
+                                <th>Kerapatan Kelas Diameter</th>
+                                <th>Volume Netto (m³)</th>
+                                <th>Kesesuaian Sertifikasi</th>
+                                <th>Status Audit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>LOG-DK-SKL001</strong></td><td>7°58'12"S 110°30'45"E</td><td>Kelas Krosok (&gt;50 cm)</td><td>2.45</td><td>PHPL / SVLK & FSC Certified</td><td><span class="badge badge-active">Passed (Clear)</span></td></tr>
+                            <tr><td><strong>LOG-DK-SKL002</strong></td><td>7°58'14"S 110°30'47"E</td><td>Kelas Krosok (&gt;60 cm)</td><td>3.12</td><td>PHPL / SVLK & FSC Certified</td><td><span class="badge badge-active">Passed (Clear)</span></td></tr>
+                            <tr><td><strong>LOG-DK-SKL003</strong></td><td>7°59'01"S 110°31'12"E</td><td>Kelas Masak (&gt;45 cm)</td><td>1.85</td><td>PHPL / SVLK compliant</td><td><span class="badge badge-warning">On-Site Verifying</span></td></tr>
+                            <tr><td><strong>LOG-DK-SKL004</strong></td><td>7°59'05"S 110°31'19"E</td><td>Kelas Krosok (&gt;70 cm)</td><td>4.10</td><td>PHPL / SVLK & PEFC Endorsed</td><td><span class="badge badge-active">Passed (Clear)</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="phpl" class="content-panel">
+            <div class="card">
+                <div class="panel-image-container">
+                    <img src="https://images.unsplash.com/photo-1590274853856-f22d5ee3d228?q=80&w=1200" alt="Dokumen Pemeriksaan Legalitas Kayu">
+                </div>
+
+                <h2 class="section-title">Metode Pengelolaan Hutan Produksi Lestari (PHPL) & Sistem Verifikasi Legalitas Kelestarian (SVLK)</h2>
+                <p>Sistem ini bersifat **Mandatoris (Wajib)** berdasarkan hukum positif Negara Republik Indonesia. Seluruh unit manajemen kehutanan yang memanen Sonokeling wajib lolos penilaian guna memperoleh Sertifikat Legalitas Kayu (SLK).</p>
+                
+                <h3 class="subsection-title">1. Kriteria Penilaian Kelestarian Dokumen (Prinsip Utama)</h3>
+                <ul>
+                    <li><strong class="highlight">Kepastian Status Kawasan Hutan:</strong> Unit manajemen wajib memegang izin konsesi yang sah (PBPH) bebas tumpang tidal lahan dengan pihak ketiga ataupun konflik kawasan dengan hukum adat masyarakat lokal.</li>
+                    <li><strong class="highlight">Metode Penebangan Berdampak Rendah (RIL):</strong> Penebangan Sonokeling wajib menerapkan teknik *Reduced Impact Logging* guna meminimalkan kerusakan tegakan tinggal di sekitar zona rebah pohon.</li>
+                </ul>
+
+                <h3 class="subsection-title">2. Protokol Rinci Pengelolaan Rantai Pasok Kayu Sonokeling</h3>
+                <ol>
+                    <li><strong>Pre-Harvest (Sensus RIL):</strong> Sensus 100% pohon terpetakan (*Cruising*) untuk mengukur tinggi, diameter, dan volume pohon guna mendapatkan barcode pelacak resmi.</li>
+                    <li><strong>Harvesting & Post-Harvest (Penatausahaan):</strong> Pemasangan plat barcode pengenal khusus pada pangkal log dan tunggak tebangan, dilanjutkan penginputan data ke sistem digital **SIPUHH** (Sistem Informasi Penatausahaan Hasil Hutan) milik Kementerian LHK.</li>
+                    <li><strong>Transportation Check:</strong> Setiap armada pengangkut kayu Sonokeling wajib membawa dokumen cetak **SKSHHK-KB** (Surat Keterangan Sahnya Hasil Hutan Kayu-Kayu Bulat) dan nota dokumen **V-Legal** elektronik untuk pemenuhan prasyarat ekspor pelabuhan.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div id="fsc" class="content-panel">
+            <div class="card">
+                <div class="panel-image-container">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200" alt="Perlindungan Ekologi FSC">
+                </div>
+
+                <h2 class="section-title">Metode Sertifikasi Forest Stewardship Council (FSC) - Standar Sukarela Global</h2>
+                <p>FSC menetapkan standar internasional sukarela berkinerja tinggi yang berfokus penuh pada proteksi ekologi ketat, hak-hak asasi buruh kehutanan, serta perlindungan kawasan adat setempat.</p>
+                
+                <h3 class="subsection-title">1. Implementasi 10 Prinsip Utama FSC terhadap Komoditas Sonokeling</h3>
+                <p>Mengingat Sonokeling adalah spesies terancam dalam daftar merah IUCN dan CITES, pemenuhan kriteria FSC berfokus pada dua instrumen inti berikut:</p>
+                <ul>
+                    <li><strong class="highlight">Prinsip Kesejahteraan Tenaga Kerja (Prinsip 2):</strong> Menjamin upah buruh tebang kayu di atas UMR regional, kewajiban penyediaan fasilitas Keselamatan dan Kesehatan Kerja (K3) level industri, serta pelarangan penuh pekerja anak di bawah umur.</li>
+                    <li><strong class="highlight">Prinsip Kawasan Konservasi Tinggi / HCVF (Prinsip 9):</strong> Unit manajemen wajib mencadangkan minimal 10% dari total luas kawasan konsesi sebagai zona bernilai konservasi tinggi (High Conservation Value). Di dalam zona ini, pohon Sonokeling berdiameter besar berfungsi sebagai *Seed Trees* (pohon induk) yang dilindungi mutlak dari gergaji mesin.</li>
+                </ul>
+
+                <h3 class="subsection-title">2. Sistem Ketat Chain of Custody (CoC) FSC</h3>
+                <p>Skema CoC FSC mengharuskan adanya ketertelusuran rantai pasok secara fisik yang bebas kontaminasi:</p>
+                <ol>
+                    <li>Pabrik pengolahan (*sawmill*) wajib memisahkan secara parsial dinding log gudang penyimpanan kayu Sonokeling bersertifikat FSC dari pasokan non-sertifikat (*Controlled Wood*).</li>
+                    <li>Sistem audit menggunakan rekonsiliasi volume penjualan: *Volume kayu masuk (input) dikurangi waste produksi harus bernilai presisi dengan volume kayu keluar (output).* Jika ditemukan selisih tanpa pembukuan otentik, hak label dagang logo pohon FSC dicabut secara sepihak.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div id="pefc" class="content-panel">
+            <div class="card">
+                <div class="panel-image-container">
+                    <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=1200" alt="Penanaman Kembali Pohon">
+                </div>
+
+                <h2 class="section-title">Metode Sertifikasi Programme for the Endorsement of Forest Certification (PEFC)</h2>
+                <p>PEFC menerapkan sertifikasi skema global terbesar melalui metode pengakuan timbal balik (*mutual recognition*) dengan sistem sertifikasi nasional di Indonesia, yaitu **IFCC** (Indonesian Forestry Certification Cooperation).</p>
+                
+                <h3 class="subsection-title">1. Kriteria Rinci Pengelolaan Hutan Berkelanjutan (SFM PEFC/IFCC)</h3>
+                <ul>
+                    <li><strong class="highlight">Penerapan Batas Konversi Lahan Keras:</strong> PEFC/IFCC menolak memberikan sertifikasi pada kayu Sonokeling yang dipanen dari area hutan alam yang sengaja dikonversi menjadi lahan monokultur perkebunan sawit atau tanaman industri komersial skala besar setelah periode tahun 2010.</li>
+                    <li><strong class="highlight">Pemeliharaan Fungsi Produksi & Kesehatan Hutan:</strong> Menuntut adanya siklus rotasi penanaman bibit kembali yang seimbang (*Reboisasi Mandiri*). Setiap satu batang Sonokeling yang ditebang, pihak korporasi diwajibkan menanam kembali minimal 10 bibit vegetatif sejenis di petak kerja yang sama guna memulihkan ketahanan ekosistem jangka panjang.</li>
+                </ul>
+
+                <h3 class="subsection-title">2. Matriks Komparatif Metode Pengelolaan Sertifikasi</h3>
+                <div class="matrix-grid">
+                    <div class="matrix-card">
+                        <h4 style="color:var(--accent-green);">Aspek Legalitas (PHPL/SVLK)</h4>
+                        <p style="font-size:0.9rem; margin-top:10px;">Fokus utama pada kepatuhan penuh terhadap hukum perundang-undangan pidana/perdata kehutanan nasional Indonesia, pemenuhan izin ekspor V-Legal, serta keaslian manifest angkutan kayu negara.</p>
+                    </div>
+                    <div class="matrix-card">
+                        <h4 style="color:var(--secondary-color);">Aspek Ekologi Ketat (FSC)</h4>
+                        <p style="font-size:0.9rem; margin-top:10px;">Menitikberatkan pada pembatasan kuota ekologis ketat, alokasi wilayah khusus konservasi plasma nutfah (HCVF), perlindungan hak tanah adat, serta pelarangan pestisida kimia di lantai hutan.</p>
+                    </div>
+                    <div class="matrix-card">
+                        <h4 style="color:var(--info-blue);">Aspek Keberlanjutan Pasar (PEFC/IFCC)</h4>
+                        <p style="font-size:0.9rem; margin-top:10px;">Menekankan pada efisiensi ekonomi jangka panjang, integrasi skema bottom-up sertifikasi nasional, jaminan regenerasi pohon komparatif, dan penolakan keras pembalakan berbasis deforestasi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p><strong>ROSI SUKMA PRATIWI</strong> | NIM: 2410611220091</p>
+        <p>Sistem Komparasi Manajemen Pengelolaan Komoditas Kayu Sonokeling - Program Studi Kehutanan</p>
+        <p style="font-size: 0.75rem; color: #475569; margin-top: 15px;">&copy; 2026 Hak Cipta Kode dan Konten Akademik Dilindungi Sistem Terintegrasi.</p>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, contentPanel, tabLinks;
+            
+            contentPanel = document.getElementsByClassName("content-panel");
+            for (i = 0; i < contentPanel.length; i++) {
+                contentPanel[i].classList.remove("active");
+            }
+
+            tabLinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            
+            window.scrollTo({
+                top: document.querySelector('.menu-container').offsetTop - 20,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+</body>
+</html>
